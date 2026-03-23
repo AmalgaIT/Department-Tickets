@@ -27,7 +27,8 @@
 select.fs{background:var(--sf);border:1px solid var(--bd2);color:var(--tx);border-radius:6px;padding:5px 10px;font-size:12.5px;font-family:var(--fn);cursor:pointer;outline:none;}
 .ctw{flex:1;overflow-y:auto;padding:18px 20px;}
 .panel{display:none;}.panel.act{display:block;}
-.kr{display:grid;gap:12px;margin-bottom:14px;}.k4{grid-template-columns:repeat(4,1fr);}.k5{grid-template-columns:repeat(5,1fr);}
+.kr{display:grid;gap:12px;margin-bottom:14px;}.k4{grid-template-columns:repeat(4,1fr);}.k5{grid-template-columns:repeat(5,1fr);}.k6{grid-template-columns:repeat(6,1fr);}
+.tbs-inp{border:1.5px solid var(--bd2);border-radius:7px;padding:6px 11px;font-size:12.5px;font-family:var(--fn);outline:none;width:170px;transition:.15s;}.tbs-inp:focus{border-color:var(--bl);}
 .kc{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:15px 16px;box-shadow:var(--sh);position:relative;overflow:hidden;}
 .kc::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;}
 .kc.kb::before{background:var(--bl);}.kc.kg::before{background:var(--gn);}.kc.ko::before{background:var(--or);}.kc.kr2::before{background:var(--rd);}.kc.kp::before{background:var(--pu);}
@@ -113,11 +114,12 @@ hr.d{border:none;border-top:1px solid var(--bd);margin:12px 0;}
 <div class="shell">
 <aside class="sb">
   <div class="lo"><div class="lo-t"><span>Amalga</span> Group</div><div class="lo-s">Operations Dashboard</div></div>
-  <div class="ns">Views</div>
+  <div class="ns">Tickets</div>
   <button class="nb act" onclick="SV('overview',this)"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Overview</button>
   <button class="nb" onclick="SV('technology',this)"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>Technology</button>
   <button class="nb" onclick="SV('operations',this)"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>Operations</button>
   <button class="nb" onclick="SV('facilities',this)"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Facilities</button>
+  <div class="ns">Inventory</div>
   <button class="nb" onclick="SV('inventory',this)"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>Equipment</button>
   <button class="nb" onclick="SV('search',this)"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>User Search</button>
   <div class="ns">Data</div>
@@ -127,6 +129,7 @@ hr.d{border:none;border-top:1px solid var(--bd);margin:12px 0;}
 <div class="mn">
   <div class="tbr">
     <div class="pt" id="ptitle">Overview</div>
+    <input class="tbs-inp" id="tbs-uq" placeholder="&#128269; Search user..." oninput="TBS()"/>
     <span class="fl">Year</span>
     <select class="fs" id="fyr" onchange="AF()"><option value="all">All</option><option value="2025">2025</option><option value="2026">2026</option></select>
     <span class="fl">Month</span>
@@ -143,21 +146,22 @@ hr.d{border:none;border-top:1px solid var(--bd);margin:12px 0;}
     </div>
     <!-- TECHNOLOGY -->
     <div class="panel" id="p-technology">
-      <div class="kr k5" id="tc-k"></div>
+      <div class="kr k6" id="tc-k"></div>
       <div class="mw"><div class="mhd"><span class="ch-t">Ticket Locations &mdash; Technology</span><span class="ch-b" id="tc-mb"></span></div><div class="mm" id="tc-mp"></div><div class="mlg" id="tc-ml"></div></div>
       <div class="row r3"><div class="cd"><div class="ch"><span class="ch-t">Top Help Categories</span></div><div class="cw"><canvas id="tc-hp"></canvas></div></div><div class="cd"><div class="ch"><span class="ch-t">Top Issue Types</span></div><div class="cw"><canvas id="tc-is"></canvas></div></div><div class="cd"><div class="ch"><span class="ch-t">By Team / Client</span></div><div class="cw"><canvas id="tc-tm"></canvas></div></div></div>
       <div class="row r55"><div class="cd"><div class="ch"><span class="ch-t">Trend Over Time</span></div><div class="cw"><canvas id="tc-tr"></canvas></div></div><div class="cd"><div class="ch"><span class="ch-t">By Location</span></div><div class="cw"><canvas id="tc-lc"></canvas></div></div></div>
+      <div class="row r55"><div class="cd" style="grid-column:1/-1"><div class="ch"><span class="ch-t">&#9888; Top Requesters</span></div><div style="overflow-y:auto;max-height:200px;"><table class="tbl" id="tc-rp"></table></div></div></div>
     </div>
     <!-- OPERATIONS -->
     <div class="panel" id="p-operations">
-      <div class="kr k5" id="op-k"></div>
+      <div class="kr k6" id="op-k"></div>
       <div class="mw"><div class="mhd"><span class="ch-t">Disruption Locations &mdash; Operations</span><span class="ch-b" id="op-mb"></span></div><div class="mm" id="op-mp"></div><div class="mlg" id="op-ml"></div></div>
       <div class="row r3"><div class="cd"><div class="ch"><span class="ch-t">Top Disruption Types</span></div><div class="cw"><canvas id="op-ty"></canvas></div></div><div class="cd"><div class="ch"><span class="ch-t">By Team / Client</span></div><div class="cw"><canvas id="op-tm"></canvas></div></div><div class="cd"><div class="ch"><span class="ch-t">By Location</span></div><div class="cw"><canvas id="op-lc"></canvas></div></div></div>
       <div class="row r55"><div class="cd"><div class="ch"><span class="ch-t">Disruptions Over Time</span></div><div class="cw"><canvas id="op-tr"></canvas></div></div><div class="cd"><div class="ch"><span class="ch-t">Repeat Requesters</span></div><div style="overflow-y:auto;max-height:200px;"><table class="tbl" id="op-rp"></table></div></div></div>
     </div>
     <!-- FACILITIES -->
     <div class="panel" id="p-facilities">
-      <div class="kr k4" id="fc-k"></div>
+      <div class="kr k5" id="fc-k"></div>
       <div class="mw"><div class="mhd"><span class="ch-t">Ticket Locations &mdash; Facilities</span><span class="ch-b" id="fc-mb"></span></div><div class="mm" id="fc-mp"></div><div class="mlg" id="fc-ml"></div></div>
       <div class="row r3"><div class="cd"><div class="ch"><span class="ch-t">Issue Categories</span></div><div class="cw"><canvas id="fc-ca"></canvas></div></div><div class="cd"><div class="ch"><span class="ch-t">Specific Issues</span></div><div class="cw"><canvas id="fc-is"></canvas></div></div><div class="cd"><div class="ch"><span class="ch-t">Trend</span></div><div class="cw"><canvas id="fc-tr"></canvas></div></div></div>
       <div class="cd"><div class="ch"><span class="ch-t">All Facilities Tickets</span></div><div style="overflow-x:auto;"><table class="tbl" id="fc-tb"></table></div></div>
@@ -686,6 +690,8 @@ function BM(mid,tickets,bid,lid){
   if(bid)document.getElementById(bid).textContent=tickets.length+' tickets';
   if(lid)document.getElementById(lid).innerHTML=ls.map(function(l){return'<span class="mli"><span class="mld" style="background:'+(LC2[l]||'#6b7280')+'"></span>'+l+' ('+lm[l]+')</span>';}).join('');
 }
+function AVG_DAYS(tickets){var valid=tickets.filter(function(t){return t.status!=='CANCELADA'&&t.date&&t.date_completed;});if(!valid.length)return null;var total=valid.reduce(function(s,t){return s+(new Date(t.date_completed)-new Date(t.date))/864e5;},0);return(total/valid.length).toFixed(1);}
+function TBS(){var q=(document.getElementById('tbs-uq').value||'').trim();if(!q){document.getElementById('sl').innerHTML='';return;}var btn=document.querySelector('.nb[onclick*="search"]');SV('search',btn);document.getElementById('uq').value=q;SU();}
 function BKP(tickets,cid,pfx,xtra){
   var total=tickets.length,closed=tickets.filter(IC).length,open=tickets.filter(IO),can=tickets.filter(ICA),pct=total?Math.round(closed/total*100):0;
   window['_op'+pfx]=open;window['_ca'+pfx]=can;
@@ -733,7 +739,9 @@ function RO(){
 function RT(){
   var it=FT(IT),ob=FT(OB),all=it.concat(ob);
   window['_obtc']=ob;
-  BKP(all,'tc-k','tc',ob.length?'<div class="kc kp ck" onclick="SM(\'Offboarding Tickets\',window._obtc)"><div class="kl">Offboarding</div><div class="kv">'+ob.length+'</div><div class="ks">Processed</div><div class="kh">&#128065; Click to view &amp; drill down</div></div>':'<div class="kc kp"><div class="kl">Offboarding</div><div class="kv">0</div><div class="ks">None</div></div>');
+  var avg=AVG_DAYS(all);
+  var avgCard=avg!==null?'<div class="kc" style="background:var(--pub);"><div class="kl">Avg Resolution</div><div class="kv" style="color:var(--pu)">'+avg+'</div><div class="ks">days (excl. cancelled)</div></div>':'<div class="kc" style="background:var(--s2);"><div class="kl">Avg Resolution</div><div class="kv" style="color:var(--t3)">—</div><div class="ks">No data</div></div>';
+  BKP(all,'tc-k','tc',(ob.length?'<div class="kc kp ck" onclick="SM(\'Offboarding Tickets\',window._obtc)"><div class="kl">Offboarding</div><div class="kv">'+ob.length+'</div><div class="ks">Processed</div><div class="kh">&#128065; Click to view &amp; drill down</div></div>':'<div class="kc kp"><div class="kl">Offboarding</div><div class="kv">0</div><div class="ks">None</div></div>')+avgCard);
   setTimeout(function(){BM('tc-mp',all,'tc-mb','tc-ml');},80);
   var helpE=TN(CN(it,'help_type'));
   MC2('tc-hp',{type:'bar',data:{labels:helpE.map(function(x){return x[0];}),datasets:[{data:helpE.map(function(x){return x[1];}),backgroundColor:P.map(function(c){return c+'cc';}),borderRadius:5,borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{font:{size:10}}},y:{grid:{color:GC},beginAtZero:true}}}});
@@ -745,6 +753,7 @@ function RT(){
   MC2('tc-tr',{type:'line',data:{labels:ml,datasets:[{label:'IT Support',data:months.map(function(m){return it.filter(function(t){return t.mon_yr===m;}).length;}),borderColor:'#2563eb',backgroundColor:'rgba(37,99,235,.08)',tension:.4,fill:true,pointRadius:3,pointBackgroundColor:'#2563eb'},{label:'Offboarding',data:months.map(function(m){return ob.filter(function(t){return t.mon_yr===m;}).length;}),borderColor:'#7c3aed',backgroundColor:'rgba(124,58,237,.08)',tension:.4,fill:true,pointRadius:3,pointBackgroundColor:'#7c3aed'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},scales:{x:{grid:{color:GC}},y:{grid:{color:GC},beginAtZero:true}}}});
   var locE=TN(CN(all,'location'));var lCt={Mexico:'#2563eb',Colombia:'#059669',Peru:'#d97706',Argentina:'#7c3aed','United States':'#dc2626'};
   MC2('tc-lc',{type:'bar',data:{labels:locE.map(function(x){return x[0];}),datasets:[{data:locE.map(function(x){return x[1];}),backgroundColor:locE.map(function(x){return (lCt[x[0]]||'#9333ea')+'cc';}),borderRadius:5,borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{grid:{color:GC},beginAtZero:true}}}});
+  RT2(all,'tc-rp');
 }
 
 // ── OPERATIONS ──
@@ -759,7 +768,8 @@ function ROP(){
     +'<div class="kc kg"><div class="kl">Resolved</div><div class="kv">'+closed+'</div><div class="ks">'+pct+'% rate</div></div>'
     +(open.length?'<div class="kc ko ck" onclick="window._sh(\'op\',\'o\')"><div class="kl">Open / Pending</div><div class="kv">'+open.length+'</div><div class="ks">Awaiting resolution</div><div class="kh">&#128065; Click to view &amp; drill down</div></div>':'<div class="kc ko"><div class="kl">Open / Pending</div><div class="kv">0</div><div class="ks">All resolved</div></div>')
     +(can.length?'<div class="kc kr2 ck" onclick="window._sh(\'op\',\'c\')"><div class="kl">Cancelled</div><div class="kv">'+can.length+'</div><div class="ks">'+(total?Math.round(can.length/total*100):0)+'% of total</div><div class="kh">&#128065; Click to view &amp; drill down</div></div>':'<div class="kc kr2"><div class="kl">Cancelled</div><div class="kv">0</div><div class="ks">None</div></div>')
-    +'<div class="kc kp"><div class="kl">Power Outages</div><div class="kv">'+po+'</div><div class="ks">Internet outages: '+io2+'</div></div>';
+    +'<div class="kc kp"><div class="kl">Power Outages</div><div class="kv">'+po+'</div><div class="ks">Internet outages: '+io2+'</div></div>'
+    +(function(){var avg=AVG_DAYS(wd);return avg!==null?'<div class="kc" style="background:var(--pub);"><div class="kl">Avg Resolution</div><div class="kv" style="color:var(--pu)">'+avg+'</div><div class="ks">days (excl. cancelled)</div></div>':'<div class="kc" style="background:var(--s2);"><div class="kl">Avg Resolution</div><div class="kv" style="color:var(--t3)">—</div><div class="ks">No data</div></div>';}());
   setTimeout(function(){BM('op-mp',wd,'op-mb','op-ml');},80);
   var wdM={};wd.forEach(function(t){var k=(t.disruption||'').trim();if(k)wdM[k]=(wdM[k]||0)+1;});var wdE=TN(wdM);
   var wdC={'Power Outage':'#ca8a04','Internet Outage':'#2563eb','Other':'#7c3aed','Late Start / Personal Reason':'#d97706'};
@@ -777,7 +787,9 @@ function ROP(){
 // ── FACILITIES ──
 function RF(){
   var fac=FT(FAC);
-  BKP(fac,'fc-k','fc','');
+  var facAvg=AVG_DAYS(fac);
+  var facAvgCard=facAvg!==null?'<div class="kc" style="background:var(--pub);"><div class="kl">Avg Resolution</div><div class="kv" style="color:var(--pu)">'+facAvg+'</div><div class="ks">days (excl. cancelled)</div></div>':'<div class="kc" style="background:var(--s2);"><div class="kl">Avg Resolution</div><div class="kv" style="color:var(--t3)">—</div><div class="ks">No data</div></div>';
+  BKP(fac,'fc-k','fc',facAvgCard);
   setTimeout(function(){BM('fc-mp',fac,'fc-mb','fc-ml');},80);
   var catE=TN(CN(fac,'fac_issue'));
   MC2('fc-ca',{type:'doughnut',data:{labels:catE.length?catE.map(function(x){return x[0];}):['No Data'],datasets:[{data:catE.length?catE.map(function(x){return x[1];}):[ 1],backgroundColor:catE.length?P:['#e5e7eb'],borderWidth:2,borderColor:'#fff',hoverOffset:3}]},options:{responsive:true,maintainAspectRatio:false,cutout:'58%',plugins:{legend:{position:'bottom'}}}});
